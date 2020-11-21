@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PuntoVentaProyectoFinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="categoriaProductos">
+    <Key>
+      <PropertyRef Name="idCategoria" />
+    </Key>
+    <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="productos" Relationship="Self.FK__productos__idCat__29572725" FromRole="categoriaProductos" ToRole="productos" />
+  </EntityType>
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="idClientes" />
+    </Key>
+    <Property Name="idClientes" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="fechaAgregado" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ventas" Relationship="Self.FK__ventas__idclient__2E1BDC42" FromRole="clientes" ToRole="ventas" />
+  </EntityType>
+  <EntityType Name="detalle_ventas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cantidad" Type="Int32" />
+    <Property Name="precio" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="idProducto" Type="Int32" />
+    <Property Name="idventa" Type="Int32" />
+    <NavigationProperty Name="productos" Relationship="Self.FK__detalle_v__idPro__32E0915F" FromRole="detalle_ventas" ToRole="productos" />
+    <NavigationProperty Name="ventas" Relationship="Self.FK__detalle_v__idven__33D4B598" FromRole="detalle_ventas" ToRole="ventas" />
+  </EntityType>
+  <EntityType Name="productos">
+    <Key>
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idCategoria" Type="Int32" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="precio" Type="Decimal" Precision="38" Scale="2" />
+    <NavigationProperty Name="categoriaProductos" Relationship="Self.FK__productos__idCat__29572725" FromRole="productos" ToRole="categoriaProductos" />
+    <NavigationProperty Name="detalle_ventas" Relationship="Self.FK__detalle_v__idPro__32E0915F" FromRole="productos" ToRole="detalle_ventas" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ventas" Relationship="Self.FK__ventas__idusuari__2F10007B" FromRole="Usuarios" ToRole="ventas" />
+  </EntityType>
+  <EntityType Name="ventas">
+    <Key>
+      <PropertyRef Name="idventa" />
+    </Key>
+    <Property Name="idventa" Type="Int32" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Precision="0" />
+    <Property Name="idcliente" Type="Int32" />
+    <Property Name="idusuario" Type="Int32" />
+    <NavigationProperty Name="clientes" Relationship="Self.FK__ventas__idclient__2E1BDC42" FromRole="ventas" ToRole="clientes" />
+    <NavigationProperty Name="detalle_ventas" Relationship="Self.FK__detalle_v__idven__33D4B598" FromRole="ventas" ToRole="detalle_ventas" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK__ventas__idusuari__2F10007B" FromRole="ventas" ToRole="Usuarios" />
+  </EntityType>
+  <Association Name="FK__productos__idCat__29572725">
+    <End Role="categoriaProductos" Type="Self.categoriaProductos" Multiplicity="0..1" />
+    <End Role="productos" Type="Self.productos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriaProductos">
+        <PropertyRef Name="idCategoria" />
+      </Principal>
+      <Dependent Role="productos">
+        <PropertyRef Name="idCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ventas__idclient__2E1BDC42">
+    <End Role="clientes" Type="Self.clientes" Multiplicity="0..1" />
+    <End Role="ventas" Type="Self.ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clientes">
+        <PropertyRef Name="idClientes" />
+      </Principal>
+      <Dependent Role="ventas">
+        <PropertyRef Name="idcliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__detalle_v__idPro__32E0915F">
+    <End Role="productos" Type="Self.productos" Multiplicity="0..1" />
+    <End Role="detalle_ventas" Type="Self.detalle_ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="productos">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="detalle_ventas">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__detalle_v__idven__33D4B598">
+    <End Role="ventas" Type="Self.ventas" Multiplicity="0..1" />
+    <End Role="detalle_ventas" Type="Self.detalle_ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ventas">
+        <PropertyRef Name="idventa" />
+      </Principal>
+      <Dependent Role="detalle_ventas">
+        <PropertyRef Name="idventa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ventas__idusuari__2F10007B">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <End Role="ventas" Type="Self.ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="ventas">
+        <PropertyRef Name="idusuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PuntoVentaProyectoFinalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="categoriaProductos" EntityType="Self.categoriaProductos" />
+    <EntitySet Name="clientes" EntityType="Self.clientes" />
+    <EntitySet Name="detalle_ventas" EntityType="Self.detalle_ventas" />
+    <EntitySet Name="productos" EntityType="Self.productos" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <EntitySet Name="ventas" EntityType="Self.ventas" />
+    <AssociationSet Name="FK__productos__idCat__29572725" Association="Self.FK__productos__idCat__29572725">
+      <End Role="categoriaProductos" EntitySet="categoriaProductos" />
+      <End Role="productos" EntitySet="productos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ventas__idclient__2E1BDC42" Association="Self.FK__ventas__idclient__2E1BDC42">
+      <End Role="clientes" EntitySet="clientes" />
+      <End Role="ventas" EntitySet="ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__detalle_v__idPro__32E0915F" Association="Self.FK__detalle_v__idPro__32E0915F">
+      <End Role="productos" EntitySet="productos" />
+      <End Role="detalle_ventas" EntitySet="detalle_ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__detalle_v__idven__33D4B598" Association="Self.FK__detalle_v__idven__33D4B598">
+      <End Role="ventas" EntitySet="ventas" />
+      <End Role="detalle_ventas" EntitySet="detalle_ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ventas__idusuari__2F10007B" Association="Self.FK__ventas__idusuari__2F10007B">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="ventas" EntitySet="ventas" />
+    </AssociationSet>
+    <FunctionImport Name="agregarClientes">
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="apellido" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="agregarProductos">
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="stock" Mode="In" Type="Int32" />
+      <Parameter Name="precioProducto" Mode="In" Type="Double" />
+      <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="agregarVentaProducto">
+      <Parameter Name="idventa" Mode="In" Type="Int32" />
+      <Parameter Name="idproducto" Mode="In" Type="Int32" />
+      <Parameter Name="canti" Mode="In" Type="Int32" />
+      <Parameter Name="precio" Mode="In" Type="Double" />
+    </FunctionImport>
+    <FunctionImport Name="crearCategorias">
+      <Parameter Name="nombreCategoria" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="crearUsuarios">
+      <Parameter Name="usuario" Mode="In" Type="String" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="apellido" Mode="In" Type="String" />
+      <Parameter Name="pass" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="editarCategorias">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="nombreCategoria" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="editarClientes">
+      <Parameter Name="idcliente" Mode="In" Type="Int32" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="apellido" Mode="In" Type="String" />
+      <Parameter Name="direccion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="editarProductos">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="stock" Mode="In" Type="Int32" />
+      <Parameter Name="precioProducto" Mode="In" Type="Double" />
+      <Parameter Name="idCategoria" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="editarUsuarios">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="usuario" Mode="In" Type="String" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="apellido" Mode="In" Type="String" />
+      <Parameter Name="pass" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_DetalleVenta" ReturnType="Collection(PuntoVentaProyectoFinalModel.sp_DetalleVenta_Result)" />
+    <FunctionImport Name="sp_DetalleVentaFiltrada" ReturnType="Collection(PuntoVentaProyectoFinalModel.sp_DetalleVentaFiltrada_Result)">
+      <Parameter Name="nombre" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_DetalleVenta1" ReturnType="Collection(PuntoVentaProyectoFinalModel.sp_DetalleVenta1_Result)" />
+    <FunctionImport Name="imprimirFactura" ReturnType="Collection(PuntoVentaProyectoFinalModel.imprimirFactura_Result)">
+      <Parameter Name="idVenta" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="reporteINventario" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteINventario_Result)" />
+    <FunctionImport Name="reporteProductosMasVendidos" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteProductosMasVendidos_Result)" />
+    <FunctionImport Name="reporteINventario1" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteINventario1_Result)" />
+    <FunctionImport Name="reporteProductosMasVendidos1" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteProductosMasVendidos1_Result)" />
+    <FunctionImport Name="reporteINventario2" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteINventario2_Result)" />
+    <FunctionImport Name="reporteProductosMasVendidos2" ReturnType="Collection(PuntoVentaProyectoFinalModel.reporteProductosMasVendidos2_Result)" />
+    <FunctionImport Name="reporteInicioVenta" ReturnType="Collection(Decimal)" />
+    <FunctionImport Name="reporteInicioIventario" ReturnType="Collection(Decimal)" />
+  </EntityContainer>
+  <ComplexType Name="sp_DetalleVenta_Result">
+    <Property Type="Int32" Name="idventa" Nullable="false" />
+    <Property Type="DateTime" Name="Fecha" Nullable="true" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+    <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="sp_DetalleVentaFiltrada_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="Fecha" Nullable="true" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+    <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="sp_DetalleVenta1_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="Fecha" Nullable="true" />
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+    <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="imprimirFactura_Result">
+    <Property Type="String" Name="Cliente" Nullable="false" MaxLength="101" />
+    <Property Type="String" Name="Vendedor" Nullable="false" MaxLength="101" />
+    <Property Type="DateTime" Name="fecha" Nullable="true" />
+    <Property Type="String" Name="nombreProducto" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="cantidad" Nullable="true" />
+    <Property Type="Decimal" Name="precio" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="reporteINventario_Result">
+    <Property Type="Int32" Name="idProducto" Nullable="false" />
+    <Property Type="String" Name="nombreProducto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="nombreCategoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="stock" Nullable="false" />
+    <Property Type="Decimal" Name="precio" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="reporteProductosMasVendidos_Result">
+    <Property Type="Int32" Name="idProducto" Nullable="false" />
+    <Property Type="String" Name="nombreProducto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="nombreCategoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Ventas" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="reporteINventario1_Result">
+    <Property Type="Int32" Name="Codigo" Nullable="false" />
+    <Property Type="String" Name="Nombre_Producto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Stock" Nullable="false" />
+    <Property Type="Decimal" Name="Precio" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="reporteProductosMasVendidos1_Result">
+    <Property Type="Int32" Name="Codigo" Nullable="false" />
+    <Property Type="String" Name="Nombre_Producto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Ventas" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="reporteINventario2_Result">
+    <Property Type="Int32" Name="Codigo" Nullable="false" />
+    <Property Type="String" Name="Producto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Stock" Nullable="false" />
+    <Property Type="Decimal" Name="Precio" Nullable="true" Precision="38" Scale="2" />
+    <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="reporteProductosMasVendidos2_Result">
+    <Property Type="Int32" Name="Codigo" Nullable="false" />
+    <Property Type="String" Name="Producto" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Categoria" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Ventas" Nullable="true" />
+  </ComplexType>
+</Schema>
