@@ -505,6 +505,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Img\logo.png" />
+    <None Include="Img\analitica.png" />
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

@@ -23,9 +23,10 @@ namespace Punto_de_venta.View.Modulos
             ReporteInicio reporteInicio = new ReporteInicio();
             this.labelTotalVenta.Text = "$" + reporteInicio.getVenta().ToString();
             this.labelTotalClientes.Text = reporteInicio.getCliente().ToString();
+            this.labelTotalProductos.Text = reporteInicio.getCountProducts().ToString();
             this.labelTotalIventario.Text = "$" + reporteInicio.getIventario().ToString();
 
-            this.pictureBox1.Location = new Point(this.Width /2 - this.pictureBox1.Width/2, this.Height / 2 - this.pictureBox1.Height / 3);
+            this.guna2Panel5.Location = new Point(this.Width /2 - this.guna2Panel5.Width/2, this.Height / 2 - this.guna2Panel5.Height / 2);
         }
     }
 }

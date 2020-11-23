@@ -105,3 +105,4 @@ C:\Users\Erinxon\Desktop\ITLA\Cuarto Cuatrimestre\Programacion II\Proyecto Final
 C:\Users\Erinxon\Desktop\ITLA\Cuarto Cuatrimestre\Programacion II\Proyecto Final\Punto de venta\obj\Debug\Punto de venta.csproj.CopyComplete
 C:\Users\Erinxon\Desktop\ITLA\Cuarto Cuatrimestre\Programacion II\Proyecto Final\Punto de venta\obj\Debug\Punto de venta.exe
 C:\Users\Erinxon\Desktop\ITLA\Cuarto Cuatrimestre\Programacion II\Proyecto Final\Punto de venta\obj\Debug\Punto de venta.pdb
+C:\Users\Erinxon\Desktop\ITLA\Cuarto Cuatrimestre\Programacion II\Proyecto Final\Punto de venta\obj\Debug\Punto de venta.csprojAssemblyReference.cache

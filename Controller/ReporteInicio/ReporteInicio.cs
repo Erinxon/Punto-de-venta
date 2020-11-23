@@ -60,5 +60,14 @@ namespace Punto_de_venta.Controller.ReporteInicio
             return total;
         }
 
+        public int getCountProducts()
+        {
+            var consulta = (from product in db.productos
+                            select product
+                            ).Count();
+
+            return consulta;
+        }
+
     }
 }

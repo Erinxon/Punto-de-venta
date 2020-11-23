@@ -39,7 +39,7 @@ namespace Punto_de_venta
                     }
                     else
                     {
-                        MessageBox.Show("La Contraseña incorrecta", "Contraseña incorrecta");
+                        MessageBox.Show("Contraseña incorrecta", "Contraseña incorrecta");
                     }
                 }
                 else
